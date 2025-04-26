@@ -78,8 +78,13 @@ class FloatingPanel<Content: View>: NSPanel, NSWindowDelegate {
       
       // 检查是否为方向键或功能键，如果是则不拦截
       let keyCode = event.keyCode
-      // 方向键、Tab、Escape、Return等导航和控制键的KeyCode范围
-      let navigationKeyCodes: Set<UInt16> = [123, 124, 125, 126, 36, 48, 53, 9, 76, 35, 116, 117, 119, 120, 121, 122, 115]
+      // 方向键、Tab、Escape、Return等导航和控制键的KeyCode
+      // 上下左右: 126, 125, 123, 124
+      // Return/Enter: 36
+      // Tab: 48
+      // Escape: 53
+      // 功能键F1-F12等: 122, 120, 99, 118, 96, 97, 98, 100, 101, 109, 103, 111
+      let navigationKeyCodes: Set<UInt16> = [123, 124, 125, 126, 36, 48, 53, 9]
       
       // 如果是方向键或导航键，直接传递事件不拦截
       if navigationKeyCodes.contains(keyCode) {
@@ -183,8 +188,12 @@ class FloatingPanel<Content: View>: NSPanel, NSWindowDelegate {
     if (event.type == .keyDown || event.type == .keyUp) && isKeyWindow {
       // 检查是否为方向键，如果是则不干预
       let keyCode = event.keyCode
-      // 方向键、Tab、Escape、Return等导航和控制键的KeyCode范围
-      let navigationKeyCodes: Set<UInt16> = [123, 124, 125, 126, 36, 48, 53, 9, 76, 35, 116, 117, 119, 120, 121, 122, 115]
+      // 方向键、Tab、Escape、Return等导航和控制键的KeyCode
+      // 上下左右: 126, 125, 123, 124
+      // Return/Enter: 36
+      // Tab: 48
+      // Escape: 53
+      let navigationKeyCodes: Set<UInt16> = [123, 124, 125, 126, 36, 48, 53, 9]
       
       // 只有非导航键才进行额外处理
       if !navigationKeyCodes.contains(keyCode) {

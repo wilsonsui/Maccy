@@ -1611,6 +1611,7 @@
 					"$(PROJECT_DIR)",
 				);
 				INFOPLIST_FILE = Maccy/Info.plist;
+				INFOPLIST_KEY_CFBundleDisplayName = Maccy;
 				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.productivity";
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
@@ -1646,6 +1647,7 @@
 					"$(PROJECT_DIR)",
 				);
 				INFOPLIST_FILE = Maccy/Info.plist;
+				INFOPLIST_KEY_CFBundleDisplayName = Maccy;
 				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.productivity";
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
