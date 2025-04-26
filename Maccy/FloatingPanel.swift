@@ -76,7 +76,17 @@ class FloatingPanel<Content: View>: NSPanel, NSWindowDelegate {
         return event
       }
       
-      // 确保事件会被分发给当前第一响应者
+      // 检查是否为方向键或功能键，如果是则不拦截
+      let keyCode = event.keyCode
+      // 方向键、Tab、Escape、Return等导航和控制键的KeyCode范围
+      let navigationKeyCodes: Set<UInt16> = [123, 124, 125, 126, 36, 48, 53, 9, 76, 35, 116, 117, 119, 120, 121, 122, 115]
+      
+      // 如果是方向键或导航键，直接传递事件不拦截
+      if navigationKeyCodes.contains(keyCode) {
+        return event
+      }
+      
+      // 只有对于字符输入键，才考虑拦截并直接发送给文本字段
       if let firstResponder = self.firstResponder, 
          !(firstResponder is NSWindow),
          firstResponder.responds(to: #selector(NSResponder.keyDown(with:))) || 
@@ -171,10 +181,18 @@ class FloatingPanel<Content: View>: NSPanel, NSWindowDelegate {
     
     // 对于键盘事件，如果已经处理了但仍然有问题，尝试手动分发
     if (event.type == .keyDown || event.type == .keyUp) && isKeyWindow {
-      if let firstResponder = firstResponder, 
-         !(firstResponder is NSWindow),
-         firstResponder.responds(to: #selector(NSResponder.interpretKeyEvents(_:))) {
-        firstResponder.interpretKeyEvents([event])
+      // 检查是否为方向键，如果是则不干预
+      let keyCode = event.keyCode
+      // 方向键、Tab、Escape、Return等导航和控制键的KeyCode范围
+      let navigationKeyCodes: Set<UInt16> = [123, 124, 125, 126, 36, 48, 53, 9, 76, 35, 116, 117, 119, 120, 121, 122, 115]
+      
+      // 只有非导航键才进行额外处理
+      if !navigationKeyCodes.contains(keyCode) {
+        if let firstResponder = firstResponder, 
+           !(firstResponder is NSWindow),
+           firstResponder.responds(to: #selector(NSResponder.interpretKeyEvents(_:))) {
+          firstResponder.interpretKeyEvents([event])
+        }
       }
     }
   }
